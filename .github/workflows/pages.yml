@@ -30,10 +30,24 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
       
+      - name: Prepare files
+        run: |
+          # 创建部署目录，只包含必要的文件
+          mkdir -p deploy
+          cp index.html deploy/
+          cp main.js deploy/
+          cp rain.png deploy/
+          # 注意：.wav 和 .glb 文件通过 Git LFS 存储，需要单独处理
+          # 创建说明文件
+          echo "# Washington Square 10.31" > deploy/README.md
+          echo "" >> deploy/README.md
+          echo "由于音频文件和 3D 模型文件较大，已通过 Git LFS 存储。" >> deploy/README.md
+          echo "要完整运行此项目，请克隆仓库并在本地运行。" >> deploy/README.md
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: './deploy'
       
       - name: Deploy to GitHub Pages
         id: deployment
