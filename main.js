@@ -198,6 +198,8 @@ const loadTimeout = setTimeout(() => {
 // 加载 GLB 模型
 const modelPath = './washington_square_new_york_city.glb';
 console.log('开始加载模型:', modelPath);
+console.log('当前页面 URL:', window.location.href);
+console.log('模型文件完整路径:', new URL(modelPath, window.location.href).href);
 
 loader.load(
     modelPath,
@@ -282,19 +284,37 @@ loader.load(
         
         let errorMsg = '加载失败: ';
         if (error.message) {
-            errorMsg += error.message;
+            // 检查是否是 JSON 解析错误（通常是 404 或路径问题）
+            if (error.message.includes('JSON') || error.message.includes('Unrecognized token')) {
+                errorMsg += '文件未找到或路径错误';
+                errorMsg += '\n提示: 请确保通过本地服务器访问（如 python3 -m http.server）';
+                errorMsg += '\n或者检查文件是否存在: ' + modelPath;
+            } else if (error.message.includes('404')) {
+                errorMsg += '文件未找到 (404)';
+                errorMsg += '\n提示: 请确保通过本地服务器访问（如 python3 -m http.server）';
+            } else {
+                errorMsg += error.message;
+            }
         } else {
             errorMsg += '请检查文件路径和网络连接';
-        }
-        
-        // 检查是否是路径问题
-        if (error.message && error.message.includes('404')) {
-            errorMsg += '\n提示: 请确保通过本地服务器访问（如 python3 -m http.server）';
         }
         
         loadingElement.textContent = errorMsg;
         loadingElement.style.color = 'red';
         loadingElement.style.whiteSpace = 'pre-line';
+        
+        // 尝试检查文件是否存在
+        fetch(modelPath, { method: 'HEAD' })
+            .then(response => {
+                if (!response.ok) {
+                    console.error('文件检查失败:', response.status, response.statusText);
+                } else {
+                    console.log('文件存在，但加载失败');
+                }
+            })
+            .catch(err => {
+                console.error('无法检查文件:', err);
+            });
     }
 );
 
