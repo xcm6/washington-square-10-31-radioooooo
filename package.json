@@ -1,0 +1,18 @@
+{
+  "name": "washington-square-10-31",
+  "version": "1.0.0",
+  "description": "Washington Square 10.31 - ASCII 3D visualization with 24-hour radio tuning system",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "three.js",
+    "ascii",
+    "3d",
+    "visualization"
+  ],
+  "author": "",
+  "license": "MIT"
+}
+

@@ -43,7 +43,29 @@ python3 -m http.server 8000
 - Web Audio API - 音频播放
 - ASCII 渲染 - 文本风格可视化
 
-## 注意事项
+## 在线部署
 
-GitHub Pages 可能无法直接提供 Git LFS 文件。如需在线访问，建议使用支持 Git LFS 的托管服务（如 Netlify 或 Vercel）。
+### Netlify 部署（推荐）
+
+1. 访问 [Netlify](https://www.netlify.com/)
+2. 点击 "Add new site" → "Import an existing project"
+3. 选择 GitHub，授权并选择仓库 `washington-square-10-31-radioooooo`
+4. 构建设置：
+   - Build command: 留空
+   - Publish directory: `.`
+5. 点击 "Deploy site"
+6. 等待部署完成，Netlify 会自动处理 Git LFS 文件
+
+### Vercel 部署
+
+1. 访问 [Vercel](https://vercel.com/)
+2. 点击 "Add New Project"
+3. 导入 GitHub 仓库 `washington-square-10-31-radioooooo`
+4. 框架预设选择 "Other"
+5. 点击 "Deploy"
+6. 等待部署完成
+
+### GitHub Pages
+
+GitHub Pages 可能无法直接提供 Git LFS 文件，建议使用 Netlify 或 Vercel 进行完整部署。
 
